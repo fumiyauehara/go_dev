@@ -22,8 +22,13 @@ func main() {
 	})
 
 	r.GET("/get_user", func(context *gin.Context) {
-		result := database.User{}.Find(3)
+		result := database.User{}.FindUser(1)
 		context.JSON(http.StatusOK, result)
+	})
+
+	r.GET("/store_user", func(context *gin.Context) {
+		database.User{FirstName: "Test", LastName: "Taro", Age: 39}.StoreUser()
+		context.JSON(http.StatusCreated, "create is OK")
 	})
 
 	_ = r.Run(":9000")

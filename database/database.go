@@ -30,7 +30,14 @@ func connect() *gorm.DB {
 	return db
 }
 
-func (u User) Find(id int) *User{
+func (u User) StoreUser() {
+	db := connect()
+	db.AutoMigrate(&User{})
+	db.Create(&u)
+	db.Close()
+}
+
+func (u User) FindUser(id int) *User{
 	db := connect()
 	db.First(&u, id)
 	db.Close()
